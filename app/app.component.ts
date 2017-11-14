@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { Http, Response, Headers } from '@angular/http';
+import 'rxjs/add/operator/map'
 
 @Component({
     selector: 'my-app',
@@ -22,15 +24,6 @@ import { Component } from '@angular/core';
   <h1>Charts of important things</h1>
   <h3>This barchart component uses an attribute directive on a canvas element. Meh.</h3>
   <barchart [data]="salesData" [width]="500" [height]="500" [colors]="['navy']" [title]="'Monthly Sales 2016'"></barchart>
-  <hr/>
-  <h3>This version of barchart component just uses a Component whose template has a canvas, and uses the ViewRef decorator to get at the canvas:</h3>
-  <barchart2 [data]="consistencyData" [width]="700" [height]="700" [colors]="colors2" [title]="'Monthly consistency levels'"></barchart2>
-  <hr/>
-  <h3>Another type of chart, a pizza pie chart (nyuck, nyuck), also uses the much nicer ViewRef technique:</h3>
-  <piechart [data]="pizzaData" [width]="500" [height]="500" [colors]="colors2" [title]="'Pizza Consumption Per-Capita'"></piechart>
-  <hr/>
-  <h3>And if charts aren't you're thing, here's another example - a "smiley" component that draws a smiley face, given a size and color.</h3>
-  <p>Hey you did a great job on that thing, pal! Real proud of ya! <smiley [size]="40" [color]="'green'"> </smiley></p>
 `
 })
 export class AppComponent {
@@ -66,5 +59,19 @@ export class AppComponent {
 
     getRandomInt(max = 100) {
         return Math.floor(Math.random()*max);
+    }
+    data: any = null;
+
+    constructor(private _http: Http) {
+        this.getMyBlog();
+    }
+
+    private getMyBlog() {
+        return this._http.get('http://localhost:8080/invoice-manager-web/rest/hello')
+            .map((res: Response) => res.text())
+            .subscribe(data => {
+                this.data = data;
+                console.log(this.data);
+            });
     }
 }

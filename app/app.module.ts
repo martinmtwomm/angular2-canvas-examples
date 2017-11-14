@@ -1,13 +1,15 @@
-import { NgModule }      from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
+import {NgModule} from '@angular/core';
+import {BrowserModule} from '@angular/platform-browser';
 import {AppComponent} from "./app.component";
 import {BarchartComponent, BarchartDataDirective} from "./barchart.component";
 import {SmileyDirective} from "./smiley.component";
 import {PiechartComponent} from "./piechart.component";
 import {Barchart2Component} from "./barchart2.component";
+import {HttpModule} from "@angular/http";
 
 @NgModule({
-    imports: [ BrowserModule ],
+
+    imports: [  HttpModule,BrowserModule ],
     declarations: [
         AppComponent,
         BarchartComponent,
